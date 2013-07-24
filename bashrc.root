@@ -10,6 +10,11 @@ export PATH=/data/local/bin:${PATH}
 
 unset LANG
 
+PROXY=77.242.201.51
+PROXYUSER=""
+
+
+
 # General aliases 
 set -o emacs
 
@@ -22,15 +27,16 @@ alias un="unalias ls"
 # functions 
 gps() { ps -edf | grep $1 | grep -v ps | grep -v grep ; }
 
-#export http_proxy="http://pierre.merle:$PASS@eu-fr-sg.eu.corp.airliquide.com:80/"
-#export https_proxy="http://pierre.merle:$PASS@eu-fr-sg.eu.corp.airliquide.com:80/"
-#http://pac.zscaler.net/airliquide.com/EMEA.pac
-# http://pac.zscaler.net/airliquide.com/EMEA.pac
-#
 function http () {
+if ${PROXY:=""};
+then
+        echo "No proxy set"
+        exit
+fi
+PROXY=77.242.201.51
 read -p "password : " -s  PASS
-export http_proxy="http://pierre.merle:$PASS@77.242.201.51:80"
-export https_proxy="http://pierre.merle:$PASS@77.242.201.51:80"
+export http_proxy="http://$PROXYUSER:$PASS@$PROXY:80/"
+export https_proxy="http://$PROXYUSER:$PASS@$PROXY:80/"
 wget -O /dev/null -q google.com
 if [ $? -ne 0 ];
 then
