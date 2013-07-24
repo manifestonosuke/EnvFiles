@@ -1,0 +1,40 @@
+# init 
+stty erase ^?
+
+# Env vars 
+export PS1="\u@\h \W # "
+
+export PS2=""
+export EDITOR=vi 
+export PATH=/data/local/bin:${PATH}
+
+unset LANG
+
+# General aliases 
+set -o emacs
+
+# Convenience aliases 
+alias src='source /root/.bashrc'
+alias vrc='vi  /root/.bashrc'
+alias mm="mysql -uroot"
+alias un="unalias ls"
+
+# functions 
+gps() { ps -edf | grep $1 | grep -v ps | grep -v grep ; }
+
+#export http_proxy="http://pierre.merle:$PASS@eu-fr-sg.eu.corp.airliquide.com:80/"
+#export https_proxy="http://pierre.merle:$PASS@eu-fr-sg.eu.corp.airliquide.com:80/"
+#http://pac.zscaler.net/airliquide.com/EMEA.pac
+# http://pac.zscaler.net/airliquide.com/EMEA.pac
+#
+function http () {
+read -p "password : " -s  PASS
+export http_proxy="http://pierre.merle:$PASS@77.242.201.51:80"
+export https_proxy="http://pierre.merle:$PASS@77.242.201.51:80"
+wget -O /dev/null -q google.com
+if [ $? -ne 0 ];
+then
+        echo "cant access internet"
+fi
+}
+
