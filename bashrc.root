@@ -68,3 +68,7 @@ fi
 }
 
 export PATH=/data/local/bin:${PATH}
+
+alias tl="tmux ls"
+function tn() { tmux new -s $1; }
+function ta() { tmux attach -t $1; }
